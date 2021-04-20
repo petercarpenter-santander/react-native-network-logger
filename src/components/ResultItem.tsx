@@ -37,6 +37,9 @@ const ResultItem: React.FC<Props> = ({ style, request, onPress }) => {
 
   const getStatusStyles = (status: number) => ({
     color: getStatusTextColor(status),
+  });
+
+  const getStatusWrapperStyles = (status: number) => ({
     borderColor: getStatusTextColor(status),
   });
 
@@ -67,12 +70,16 @@ const ResultItem: React.FC<Props> = ({ style, request, onPress }) => {
         >
           {request.method}
         </Text>
-        <Text
-          style={[styles.status, getStatusStyles(request.status)]}
-          accessibilityLabel={`Response status ${status}`}
+        <View
+          style={[styles.statusWrapper, getStatusWrapperStyles(request.status)]}
         >
-          {status}
-        </Text>
+          <Text
+            style={[styles.status, getStatusStyles(request.status)]}
+            accessibilityLabel={`Response status ${status}`}
+          >
+            {status}
+          </Text>
+        </View>
         <Text style={styles.text}>
           {request.duration > 0 ? `${request.duration}ms` : 'pending'}
         </Text>
@@ -110,12 +117,16 @@ const themedStyles = (theme: Theme) =>
     },
     status: {
       fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    statusWrapper: {
       borderWidth: 1,
       borderRadius: 10,
       paddingVertical: 1,
       paddingHorizontal: 4,
-      textAlign: 'center',
       marginVertical: 3,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     text: {
       color: theme.colors.text,
